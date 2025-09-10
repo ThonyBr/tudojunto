@@ -1,0 +1,28 @@
+<!DOCTYPE html> <!-- Declaração do tipo de documento como HTML5 -->
+<html lang="pt-br"> <!-- Início do documento HTML, com a língua definida como português brasileiro -->
+<head> <!-- Início da seção de metadados e links de recursos -->
+    <meta charset="UTF-8"> <!-- Define a codificação de caracteres como UTF-8, importante para caracteres especiais -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Torna o layout responsivo para dispositivos móveis -->
+    <title>Login - Sistema</title> <!-- Define o título da página (exibido na aba do navegador) -->
+    <link rel="stylesheet" href="style.css"> <!-- Vincula o arquivo de estilos CSS para aplicar o layout -->
+</head>
+<body> <!-- Início do corpo da página, onde o conteúdo visível vai aparecer -->
+    <div class="login-container"> <!-- Contêiner para o formulário de login -->
+        <h1>Login do Sistema</h1> <!-- Título do formulário de login -->
+        <form id="loginForm"> <!-- Formulário de login, com id para ser referenciado no JavaScript -->
+            <div> <!-- Início do bloco de usuário -->
+                <label for="usuario">Usuário:</label> <!-- Rótulo do campo de entrada de usuário -->
+                <input type="text" id="usuario" placeholder="Digite seu usuário" required> <!-- Campo de entrada de texto para o usuário -->
+            </div>
+            <div> <!-- Início do bloco de senha -->
+                <label for="senha">Senha:</label> <!-- Rótulo do campo de entrada de senha -->
+                <input type="password" id="senha" placeholder="Digite sua senha" required> <!-- Campo de entrada de senha -->
+            </div>
+            <button type="submit">Entrar</button> <!-- Botão para enviar o formulário -->
+        </form>
+        <div id="message"></div> <!-- Div onde a mensagem de erro ou sucesso será exibida -->
+    </div>
+
+    <script src="script.js"></script> <!-- Vincula o arquivo JavaScript que contém a lógica do login -->
+</body>
+</html>

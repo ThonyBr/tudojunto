@@ -1,0 +1,61 @@
+body {
+    font-family: Arial, sans-serif; /* Define a fonte padrão do corpo da página como Arial (ou sans-serif se não disponível) */
+    margin: 0; /* Remove a margem padrão do navegador */
+    padding: 0; /* Remove o preenchimento padrão do navegador */
+    height: 100vh; /* Define a altura da página para 100% da altura da tela */
+    background: linear-gradient(to right, yellow, black); /* Aplica um fundo degradê de amarelo para preto */
+    display: flex; /* Define o layout como flexbox */
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center; /* Centraliza o conteúdo verticalmente */
+}
+
+.login-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Aplica um fundo branco semi-transparente ao contêiner */
+    padding: 30px; /* Adiciona 30 pixels de espaçamento interno no contêiner */
+    border-radius: 8px; /* Adiciona bordas arredondadas ao contêiner */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Adiciona uma sombra suave ao contêiner para dar um efeito de profundidade */
+    text-align: center; /* Centraliza o texto dentro do contêiner */
+    width: 300px; /* Define a largura do contêiner como 300 pixels */
+}
+
+h1 {
+    font-size: 24px; /* Define o tamanho da fonte do título como 24 pixels */
+    color: #333; /* Define a cor do título como um tom escuro de cinza */
+}
+
+label {
+    font-size: 16px; /* Define o tamanho da fonte do rótulo como 16 pixels */
+    display: block; /* Faz o rótulo ocupar toda a linha */
+    margin-bottom: 8px; /* Adiciona 8 pixels de espaço abaixo do rótulo */
+    text-align: left; /* Alinha o texto do rótulo à esquerda */
+}
+
+input[type="text"], input[type="password"] {
+    width: 100%; /* Faz os campos de entrada ocuparem toda a largura disponível */
+    padding: 10px; /* Adiciona 10 pixels de preenchimento dentro dos campos */
+    margin-bottom: 15px; /* Adiciona 15 pixels de espaço abaixo dos campos */
+    border: 1px solid #ccc; /* Define uma borda cinza clara ao redor dos campos */
+    border-radius: 4px; /* Torna os cantos dos campos arredondados */
+    font-size: 16px; /* Define o tamanho da fonte dentro dos campos como 16 pixels */
+}
+
+button {
+    background-color: #333; /* Define o fundo do botão como cinza escuro */
+    color: white; /* Define a cor do texto do botão como branco */
+    padding: 10px; /* Adiciona 10 pixels de preenchimento dentro do botão */
+    width: 100%; /* Faz o botão ocupar toda a largura do contêiner */
+    border: none; /* Remove a borda padrão do botão */
+    border-radius: 4px; /* Torna os cantos do botão arredondados */
+    font-size: 16px; /* Define o tamanho da fonte no botão como 16 pixels */
+    cursor: pointer; /* Altera o cursor para um ponteiro (mão) ao passar o mouse sobre o botão */
+}
+
+button:hover {
+    background-color: #555; /* Altera a cor de fundo do botão para cinza claro ao passar o mouse sobre ele */
+}
+
+#message {
+    margin-top: 15px; /* Adiciona 15 pixels de espaço acima da mensagem */
+    font-size: 16px; /* Define o tamanho da fonte da mensagem como 16 pixels */
+    color: red; /* Inicialmente a cor da mensagem é vermelha */
+}
