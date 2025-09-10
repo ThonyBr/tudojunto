@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jogo de Carro 2D</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #111;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<script>
+  // Definindo o contexto 2D do jogo
+  const canvas = document.createElement('canvas');
+  document.body.appendChild(canvas);
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const ctx = canvas.getContext('2d');
+
+  const carWidth = 60;
+  const carHeight = 120;
+
+  const roadWidth = 400;
+  const laneWidth = roadWidth / 3;
+
+  const carSpeed = 4;
+  const obstacleSpeed = 2;
+  const obstacleWidth = 60;
+  const obstacleHeight = 60;
+
+  let carX = canvas.width / 2 - carWidth / 2;
+  let carY = canvas.height - carHeight - 20;
+
+  let keys = {};
+  let obstacles = [];
+  let laneMarks = [];
+
+  // Função para desenhar o carro
+  function drawCar() {
+    ctx.fillStyle = 'red';
+    ctx.fillRect(carX, carY, carWidth, carHeight);
+  }
+
+  // Função para desenhar a estrada e as faixas
+  function drawRoad() {
+    ctx.fillStyle = '#333';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Desenhando a estrada central
+    ctx.fillStyle = '#444';
+    ctx.fillRect((canvas.width - roadWidth) / 2, 0, roadWidth, canvas.height);
+
+    // Desenhando as faixas
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 5;
+    ctx.setLineDash([20, 20]);
+    ctx.beginPath();
+    for (let i = 0; i < 100; i++) {
+      ctx.moveTo((canvas.width - roadWidth) / 2 + laneWidth, i * 60);
+      ctx.lineTo((canvas.width - roadWidth) / 2 + laneWidth, i * 60 + 30);
+      ctx.moveTo((canvas.width - roadWidth) / 2 + laneWidth * 2, i * 60);
+      ctx.lineTo((canvas.width - roadWidth) / 2 + laneWidth * 2, i * 60 + 30);
+    }
+    ctx.stroke();
+  }
+
+  // Função para desenhar os obstáculos
+  function drawObstacles() {
+    ctx.fillStyle = 'orange';
+    obstacles.forEach(obstacle => {
+      ctx.fillRect(obstacle.x, obstacle.y, obstacleWidth, obstacleHeight);
+    });
+  }
+
+  // Função para atualizar a posição do carro
+  function updateCarPosition() {
+    if (keys['ArrowLeft'] && carX > (canvas.width - roadWidth) / 2) {
+      carX -= carSpeed;
+    }
+    if (keys['ArrowRight'] && carX < (canvas.width - roadWidth) / 2 + roadWidth - carWidth) {
+      carX += carSpeed;
+    }
+  }
+
+  // Função para criar obstáculos
+  function createObstacle() {
+    const x = (Math.random() * 2) * laneWidth + (canvas.width - roadWidth) / 2;
+    const y = -obstacleHeight;
+    obstacles.push({ x, y });
+  }
+
+  // Função para atualizar a posição dos obstáculos
+  function updateObstacles() {
+    obstacles.forEach((obstacle, index) => {
+      obstacle.y += obstacleSpeed;
+
+      // Se o obstáculo passar do fundo da tela, removê-lo
+      if (obstacle.y > canvas.height) {
+        obstacles.splice(index, 1);
+      }
+
+      // Verificar colisão com o carro
+      if (
+        carX < obstacle.x + obstacleWidth &&
+        carX + carWidth > obstacle.x &&
+        carY < obstacle.y + obstacleHeight &&
+        carY + carHeight > obstacle.y
+      ) {
+        alert("💥 Bateu! Fim de jogo");
+        window.location.reload();
+      }
+    });
+  }
+
+  // Função para desenhar as marcas da estrada
+  function drawLaneMarks() {
+    laneMarks.forEach(mark => {
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(mark.x, mark.y, mark.width, mark.height);
+    });
+  }
+
+  // Função para atualizar a posição das marcas da estrada
+  function updateLaneMarks() {
+    laneMarks.forEach(mark => {
+      mark.y += carSpeed;
+
+      if (mark.y > canvas.height) {
+        mark.y = -mark.height;
+      }
+    });
+  }
+
+  // Função de animação
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawRoad();
+    drawCar();
+    drawObstacles();
+    drawLaneMarks();
+    updateCarPosition();
+    updateObstacles();
+    updateLaneMarks();
+
+    requestAnimationFrame(animate);
+  }
+
+  // Criar as faixas de pista
+  for (let i = 0; i < 10; i++) {
+    laneMarks.push({
+      x: (canvas.width - roadWidth) / 2 + laneWidth,
+      y: i * 100,
+      width: 10,
+      height: 30,
+    });
+    laneMarks.push({
+      x: (canvas.width - roadWidth) / 2 + laneWidth * 2,
+      y: i * 100,
+      width: 10,
+      height: 30,
+    });
+  }
+
+  // Criar obstáculos a cada 1.5 segundos
+  setInterval(createObstacle, 1500);
+
+  // Eventos de controle do carro
+  document.addEventListener("keydown", (e) => {
+    keys[e.key] = true;
+  });
+  document.addEventListener("keyup", (e) => {
+    keys[e.key] = false;
+  });
+
+  animate();
+</script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aluguel de Veículos</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fff9c4; /* amarelo clarinho */
+      color: #333;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #1565c0; /* azul */
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      z-index: 1000;
+    }
+    main {
+      padding: 80px 20px 20px 20px; /* espaço para header fixo */
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hidden {
+      display: none;
+    }
+    button {
+      background-color: #1565c0;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #0d3b73;
+    }
+    input[type="text"], input[type="password"], input[type="number"] {
+      padding: 8px;
+      width: 100%;
+      margin: 6px 0 12px 0;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .vehicle-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+    .vehicle-card {
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      width: 180px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 1px 1px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+    .vehicle-card:hover {
+      transform: scale(1.05);
+      box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+    }
+    .vehicle-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+    }
+    .vehicle-name {
+      padding: 10px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .message {
+      margin-top: 20px;
+      font-weight: bold;
+      color: green;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+<header>Aluguel de Veículos</header>
+
+<main>
+
+  <!-- Login -->
+  <section id="login-section">
+    <h2>Login</h2>
+    <label for="username">Usuário:</label>
+    <input type="text" id="username" placeholder="Admin" />
+    <label for="password">Senha:</label>
+    <input type="password" id="password" placeholder="Senha" />
+    <button onclick="login()">Entrar</button>
+    <p id="login-error" style="color:red;"></p>
+  </section>
+
+  <!-- Página Inicial -->
+  <section id="home-section" class="hidden">
+    <h2>Bem-vindo ao aluguel de veículos!</h2>
+    <p>Escolha um veículo para continuar.</p>
+    <button onclick="showVehicles()">Ver Veículos</button>
+  </section>
+
+  <!-- Lista de Veículos -->
+  <section id="vehicles-section" class="hidden">
+    <h2>Veículos Disponíveis</h2>
+    <div class="vehicle-list">
+      <div class="vehicle-card" onclick="chooseVehicle('Carro 1')">
+        <img src="https://via.placeholder.com/180x120?text=Carro+1" alt="Carro 1" />
+        <div class="vehicle-name">Carro 1</div>
+      </div>
+      <div class="vehicle-card" onclick="chooseVehicle('Carro 2')">
+        <img src="https://via.placeholder.com/180x120?text=Carro+2" alt="Carro 2" />
+        <div class="vehicle-name">Carro 2</div>
+      </div>
+      <div class="vehicle-card" onclick="chooseVehicle('Carro 3')">
+        <img src="https://via.placeholder.com/180x120?text=Carro+3" alt="Carro 3" />
+        <div class="vehicle-name">Carro 3</div>
+      </div>
+    </div>
+    <button onclick="showHome()">Voltar</button>
+  </section>
+
+  <!-- Formulário motorista -->
+  <section id="driver-section" class="hidden">
+    <h2>Dados do Motorista para <span id="chosen-vehicle-name"></span></h2>
+    <label for="driver-name">Nome:</label>
+    <input type="text" id="driver-name" placeholder="Nome completo" />
+    <label for="driver-cnh">Número da CNH:</label>
+    <input type="text" id="driver-cnh" placeholder="Número da CNH" />
+    <button onclick="finalizeRental()">Finalizar Pedido</button>
+    <button onclick="showVehicles()">Voltar</button>
+    <p class="message" id="rental-message"></p>
+  </section>
+
+</main>
+
+<script>
+  function login() {
+    const user = document.getElementById('username').value.trim();
+    const pass = document.getElementById('password').value.trim();
+    const error = document.getElementById('login-error');
+
+    if(user === 'Admin' && pass === '123@4') {
+      error.textContent = '';
+      document.getElementById('login-section').classList.add('hidden');
+      document.getElementById('home-section').classList.remove('hidden');
+    } else {
+      error.textContent = 'Usuário ou senha incorretos!';
+    }
+  }
+
+  function showVehicles() {
+    document.getElementById('home-section').classList.add('hidden');
+    document.getElementById('vehicles-section').classList.remove('hidden');
+  }
+
+  function showHome() {
+    document.getElementById('vehicles-section').classList.add('hidden');
+    document.getElementById('driver-section').classList.add('hidden');
+    document.getElementById('rental-message').textContent = '';
+    document.getElementById('home-section').classList.remove('hidden');
+  }
+
+  function chooseVehicle(name) {
+    document.getElementById('vehicles-section').classList.add('hidden');
+    document.getElementById('driver-section').classList.remove('hidden');
+    document.getElementById('chosen-vehicle-name').textContent = name;
+    document.getElementById('driver-name').value = '';
+    document.getElementById('driver-cnh').value = '';
+    document.getElementById('rental-message').textContent = '';
+  }
+
+  function finalizeRental() {
+    const name = document.getElementById('driver-name').value.trim();
+    const cnh = document.getElementById('driver-cnh').value.trim();
+    const message = document.getElementById('rental-message');
+
+    if(name === '' || cnh === '') {
+      message.style.color = 'red';
+      message.textContent = 'Por favor, preencha todos os campos.';
+      return;
+    }
+
+    message.style.color = 'green';
+    message.textContent = 'Aluguel efetuado com sucesso!';
+
+    // Poderia aqui enviar os dados para backend ou salvar localmente
+  }
+</script>
+
+</body>
+</html>
